@@ -5,7 +5,7 @@ export default function HomeLayout() {
   return (
     <Tabs>
       <Tabs.Screen
-        name="home"
+        name="home "
         options={{
           headerShown: false,
           tabBarShowLabel: false,
