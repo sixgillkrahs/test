@@ -1,0 +1,22 @@
+server:
+  port: 8500
+spring:
+  application:
+    name: APP-SERVICE
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+    properties:
+      hibernate, dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/app-service
+    username: postgres
+    password: 123456
+
+telegram:
+  bot:
+    token: 7603284001:AAHNMfpZiqTB-Yzrfb3o2ft9yP7QNbU6soI
+    userId: 6152427961
+    chatId: 6152427961
