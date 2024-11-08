@@ -13,7 +13,7 @@ import { Formik } from "formik";
 import { ButtonTouchable, InputLalel } from "@/components";
 import * as Yup from "yup";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { getUserDetail } from "@/services/user";
+import { getUserDetail, updateUser } from "@/services/user";
 import Toast from "react-native-toast-message";
 
 const validationSchema = Yup.object().shape({
@@ -37,58 +37,82 @@ export default function Courses() {
     password: "",
   });
 
-  const getUser = async () => {
+  // const getUser = async () => {
+  //   const jsonValue = await AsyncStorage.getItem("user");
+  //   if (jsonValue) {
+  //     const userData = JSON.parse(jsonValue);
+  //     if (userData && userData.id) {
+  //       const resp = await getUserDetail({ id: userData.id });
+  //       if (resp && resp.status) {
+  //         setInitialValues({
+  //           username: resp.data.username || "",
+  //           password: resp.data.password || "",
+  //         });
+  //       } else {
+  //         Toast.show({
+  //           type: "error",
+  //           text1: "Error",
+  //           text2: "Unable to fetch user details.",
+  //           position: "bottom",
+  //           visibilityTime: 2000,
+  //         });
+  //       }
+  //     } else {
+  //       Toast.show({
+  //         type: "error",
+  //         text1: "Error",
+  //         text2: "User ID is missing.",
+  //         position: "bottom",
+  //         visibilityTime: 2000,
+  //       });
+  //     }
+  //   } else {
+  //     Toast.show({
+  //       type: "error",
+  //       text1: "Error",
+  //       text2: "No user data found.",
+  //       position: "bottom",
+  //       visibilityTime: 2000,
+  //     });
+  //   }
+  // };
+
+  useEffect(() => {
+    // getUser();
+  }, []);
+
+  const handleSubmit = async (value: any) => {
     const jsonValue = await AsyncStorage.getItem("user");
     if (jsonValue) {
       const userData = JSON.parse(jsonValue);
-      if (userData && userData.id) {
-        const resp = await getUserDetail({ id: userData.id });
-        if (resp && resp.status) {
-          setInitialValues({
-            username: resp.data.username || "",
-            password: resp.data.password || "",
-          });
-        } else {
-          Toast.show({
-            type: "error",
-            text1: "Error",
-            text2: "Unable to fetch user details.",
-            position: "bottom",
-            visibilityTime: 2000,
-          });
-        }
+      const resp = await updateUser({ id: userData.id, data: value });
+      console.log(resp);
+      if (resp.status) {
+        Toast.show({
+          text1: resp.message,
+          position: "top",
+          type: "success",
+          visibilityTime: 2000,
+        });
+        await AsyncStorage.setItem("user", resp.data);
       } else {
         Toast.show({
           type: "error",
-          text1: "Error",
-          text2: "User ID is missing.",
+          text1: resp.message,
           position: "bottom",
           visibilityTime: 2000,
         });
       }
     } else {
-      Toast.show({
-        type: "error",
-        text1: "Error",
-        text2: "No user data found.",
-        position: "bottom",
-        visibilityTime: 2000,
-      });
+      console.log("hello");
     }
-  };
-
-  console.log(initialValues);
-
-  useEffect(() => {
-    getUser();
-  }, []);
-
-  const handleSubmit = () => {
-    console.log("heloo");
   };
 
   return (
     <View style={styles.container}>
+      <View className="h-32 flex items-center">
+        <Text className="text-4xl ">Update your profile</Text>
+      </View>
       <Formik
         initialValues={initialValues as user}
         validationSchema={validationSchema}
@@ -148,6 +172,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
+    justifyContent: "center",
     padding: 20,
   },
   title: {

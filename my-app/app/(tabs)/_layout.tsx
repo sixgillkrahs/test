@@ -24,6 +24,12 @@ export default function TabLayout() {
             headerShown: false,
           }}
         />
+        <Stack.Screen
+          name="forgotPassword"
+          options={{
+            headerShown: false,
+          }}
+        />
       </Stack>
       <Toast />
     </>

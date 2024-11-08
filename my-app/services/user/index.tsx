@@ -32,7 +32,7 @@ const updateUser = async ({
   data: { username: string; password: string };
 }) => {
   try {
-    const resp = await axios.put(baseURL + `user/detail/${id}`, data);
+    const resp = await axios.put(baseURL + `user/update/${id}`, data);
     return {
       message: resp.data.message,
       data: resp.data.data,

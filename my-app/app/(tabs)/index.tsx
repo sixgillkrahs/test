@@ -46,6 +46,10 @@ export default function Index() {
     }
   };
 
+  const handleNav = () => {
+    navigation.navigate("forgotPassword");
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.loginContainer}>
@@ -100,7 +104,7 @@ export default function Index() {
             </View>
           )}
         </Formik>
-        <TextTouchable context="Forgot password" />
+        <TextTouchable context="Forgot password" onClick={handleNav} />
         <View style={styles.registerContainer}>
           <Text style={styles.registerText}>Don't have an account?</Text>
           <Link href="/(tabs)/register">Register</Link>

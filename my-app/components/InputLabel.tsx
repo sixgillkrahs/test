@@ -10,11 +10,12 @@ import Icon from "react-native-vector-icons/FontAwesome";
 
 interface Props {
   style?: TextInputProps;
-  title: string;
+  title?: string;
   icon?: string;
   onChangeText: (text: string) => void;
   onBlur: () => void;
   value: string;
+  disable?: boolean;
 }
 
 export function InputLalel({
@@ -24,10 +25,11 @@ export function InputLalel({
   onBlur,
   value,
   style,
+  disable,
 }: Props) {
   return (
     <View>
-      <Text style={styles.label}>{title}</Text>
+      {title ? <Text style={styles.label}>{title}</Text> : <></>}
       <View style={styles.inputContainer}>
         {icon && (
           <Icon name={icon} size={20} color="#999" style={styles.inputIcon} />
@@ -37,6 +39,8 @@ export function InputLalel({
           onChangeText={onChangeText}
           onBlur={onBlur}
           value={value}
+          // disableFullscreenUI={false}
+          editable={!disable}
           {...style}
         />
       </View>
