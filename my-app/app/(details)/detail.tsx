@@ -12,6 +12,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { getDetailCourse } from "@/services/courses";
 import { useRoute } from "@react-navigation/native";
+import Toast from "react-native-toast-message";
 
 export default function Detail({}: any) {
   const [course, setCourse] = useState<any>([]);
@@ -23,7 +24,12 @@ export default function Detail({}: any) {
     if (resp.status) {
       setCourse(resp.data);
     } else {
-      ToastAndroid.show(resp.message || "error", 2000);
+      Toast.show({
+        type: "error",
+        text1: "Error",
+        position: "bottom",
+        visibilityTime: 2000,
+      });
     }
   };
 

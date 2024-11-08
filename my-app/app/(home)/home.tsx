@@ -16,14 +16,14 @@ import { Dimensions } from "react-native";
 import { ScrollViewComponent } from "@/components/ScrollView";
 import { getAllCourses, getAllCoursesByType } from "@/services/courses";
 import { getAllTypeCourses } from "@/services/typeCourse";
+import Toast from "react-native-toast-message";
+const hero1 = require("../../assets/images/hero/hero1.png");
+const hero2 = require("../../assets/images/hero/hero2.png");
+const hero3 = require("../../assets/images/hero/hero3.png");
 
 const { width: screenWidth } = Dimensions.get("window");
 
-const images = [
-  { uri: "http://192.168.100.5:9900/test1/hero/hero1.png" },
-  { uri: "http://192.168.100.5:9900/test1/hero/hero2.png" },
-  { uri: "http://192.168.100.5:9900/test1/hero/hero3.png" },
-];
+const images = [hero1, hero2, hero3];
 
 export default function Home() {
   const [name, setName] = useState<string>("");
@@ -44,7 +44,12 @@ export default function Home() {
       console.log(resp.data);
       setCourses(resp.data);
     } else {
-      ToastAndroid.show("Error", 2000);
+      Toast.show({
+        type: "error",
+        text1: "Error",
+        position: "bottom",
+        visibilityTime: 2000,
+      });
     }
   };
 
@@ -53,7 +58,12 @@ export default function Home() {
     if (resp.status) {
       setTypeCourse(resp.data);
     } else {
-      ToastAndroid.show("Error", 2000);
+      Toast.show({
+        type: "error",
+        text1: "Error",
+        position: "bottom",
+        visibilityTime: 2000,
+      });
     }
   };
 

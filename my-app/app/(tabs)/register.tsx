@@ -6,6 +6,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { register } from "@/services/auth";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Toast from "react-native-toast-message";
 
 const validationSchema = Yup.object().shape({
   username: Yup.string().required("Username is required"),
@@ -30,13 +31,17 @@ export default function RegisterScreen() {
   const navigation: any = useNavigation();
   const handleRegister = async (values: any) => {
     const resp = await register(values);
-    console.log(resp);
     if (resp.status) {
       const jsonValue = JSON.stringify(resp.data);
       await AsyncStorage.setItem("user", jsonValue);
       navigation.navigate("vetifyOtp");
     } else {
-      ToastAndroid.show(resp.message, 2000);
+      Toast.show({
+        type: "error",
+        text1: resp.message,
+        position: "bottom",
+        visibilityTime: 2000,
+      });
     }
   };
 

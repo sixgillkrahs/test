@@ -13,6 +13,7 @@ import * as Yup from "yup";
 import { login } from "@/services/auth";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Toast from "react-native-toast-message";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Email is required"),
@@ -36,7 +37,12 @@ export default function Index() {
         navigation.navigate("vetifyOtp");
       }
     } else {
-      ToastAndroid.show("Wrong username or password", 2000);
+      Toast.show({
+        type: "error",
+        text1: "Wrong username or password",
+        position: "bottom",
+        visibilityTime: 2000,
+      });
     }
   };
 

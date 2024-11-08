@@ -12,6 +12,7 @@ import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import { vefityOtp } from "@/services/auth";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Toast from "react-native-toast-message";
 
 const validationSchema = Yup.object().shape({
   otp: Yup.string()
@@ -32,7 +33,12 @@ export default function VerifyOTP() {
       if (resp.data) {
         navigation.navigate("(home)");
       } else {
-        ToastAndroid.show(resp.message || "Sai OTP", 3000);
+        Toast.show({
+          type: "error",
+          text1: "Sai OTP",
+          position: "bottom",
+          visibilityTime: 2000,
+        });
       }
     } else {
       console.error("OTP verification failed");

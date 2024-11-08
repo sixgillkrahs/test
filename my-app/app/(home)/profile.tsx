@@ -10,6 +10,7 @@ import { View } from "react-native";
 import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Image } from "react-native";
 import { useNavigation } from "expo-router";
+import Toast from "react-native-toast-message";
 
 export default function Profile() {
   const navigation: any = useNavigation();
@@ -23,6 +24,38 @@ export default function Profile() {
         console.log("helo");
         return;
       }
+      case "wishlist": {
+        Toast.show({
+          type: "info",
+          text1: "Sớm phát triển",
+          position: "top",
+          visibilityTime: 2000,
+          // text2: "sớm ",
+        });
+        return;
+      }
+      case "alarm": {
+        Toast.show({
+          type: "info",
+          text1: "Sớm phát triển",
+          position: "top",
+          visibilityTime: 2000,
+        });
+        return;
+      }
+      case "Achievement": {
+        Toast.show({
+          type: "info",
+          text1: "Sớm phát triển",
+          position: "top",
+          visibilityTime: 2000,
+        });
+        return;
+      }
+      case "settings": {
+        handleSetting();
+        return;
+      }
       default:
         return;
     }
@@ -30,6 +63,10 @@ export default function Profile() {
 
   const handleLogout = () => {
     navigation.navigate("(tabs)", { screen: "index" });
+  };
+
+  const handleSetting = () => {
+    navigation.navigate("(details)", { screen: "profileDetail" });
   };
 
   return (

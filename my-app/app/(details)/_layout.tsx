@@ -16,6 +16,12 @@ export default function DetailLayout() {
           headerShown: false,
         }}
       />
+      <Stack.Screen
+        name="profileDetail"
+        options={{
+          headerShown: false,
+        }}
+      />
     </Stack>
   );
 }
