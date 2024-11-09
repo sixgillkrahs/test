@@ -8,7 +8,8 @@ public enum ErrorCode {
     FAILED(500, "Failed"),
     UNAUTHORIZED(401, "Unauthorized"),
     FORBIDDEN(403, "Forbidden"),
-    USER_NOT_ACTIVED(200, "User not actived")
+    USER_NOT_ACTIVED(200, "User not actived"),
+    INVALID_OTP(400, "Invalid OTP")
     ;
 
     ErrorCode(int code, String message) {

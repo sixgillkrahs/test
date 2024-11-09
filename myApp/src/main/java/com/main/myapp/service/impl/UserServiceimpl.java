@@ -3,6 +3,7 @@ package com.main.myapp.service.impl;
 
 import com.main.myapp.dto.user.CreateUserDto;
 import com.main.myapp.dto.user.Login;
+import com.main.myapp.dto.user.UpdateUserDto;
 import com.main.myapp.dto.user.UserDto;
 import com.main.myapp.exceptions.ErrorCode;
 import com.main.myapp.exceptions.HandleRuntimeException;
@@ -53,8 +54,18 @@ public class UserServiceimpl implements UserService {
     }
 
     @Override
-    public void getUserById(UUID id) {
-
+    public UserDto getUserById(UUID id) {
+        User user = userRepository.findById(id).orElse(null);
+        if(user == null){
+            throw new HandleRuntimeException(ErrorCode.ITEM_NOT_FOUND);
+        }
+        UserDto userDto = new UserDto();
+        userDto.setId(user.getId());
+        userDto.setUsername(user.getUsername());
+        userDto.setEmail(user.getEmail());
+        userDto.setPhone(user.getPhone());
+        userDto.setIsActived(user.getIsActived());
+        return userDto;
     }
 
     @Override
@@ -77,5 +88,28 @@ public class UserServiceimpl implements UserService {
             return userDto;
         }
         return userDto;
+    }
+
+    @Override
+    public UserDto updateUserById(UUID id, UpdateUserDto input) {
+        User user = userRepository.findById(id).orElse(null);
+        if(user == null){
+            throw new HandleRuntimeException(ErrorCode.ITEM_NOT_FOUND);
+        }
+        user.setUsername(input.getUsername());
+        user.setPassword(input.getPassword());
+        userRepository.save(user);
+        UserDto userDto = new UserDto();
+        userDto.setId(user.getId());
+        userDto.setUsername(user.getUsername());
+        userDto.setEmail(user.getEmail());
+        userDto.setPhone(user.getPhone());
+        userDto.setIsActived(user.getIsActived());
+        return userDto;
+    }
+
+    @Override
+    public void forgotPassword(String phone, String otp) {
+        otpService.sendNewPassword(phone, otp);
     }
 }
